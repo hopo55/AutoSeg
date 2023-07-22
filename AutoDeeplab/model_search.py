@@ -8,7 +8,6 @@ from genotypes import Genotype
 
 
 class MixedOp (nn.Module):
-
     def __init__(self, C, stride):
         super(MixedOp, self).__init__()
         self._ops = nn.ModuleList()
@@ -23,7 +22,6 @@ class MixedOp (nn.Module):
 
 
 class Cell(nn.Module):
-
     def __init__(self, steps, multiplier, C_prev_prev, C_prev, C, rate):
 
         super(Cell, self).__init__()
@@ -65,6 +63,3 @@ class Cell(nn.Module):
 
         concat_feature = torch.cat(states[-self._multiplier:], dim=1)
         return  self.ReLUConvBN (concat_feature)
-
-
-

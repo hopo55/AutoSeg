@@ -102,9 +102,11 @@ class Trainer(object):
         tbar = tqdm(self.train_loader1)
         num_img_tr = len(self.train_loader1)
         for i, sample in enumerate(tbar):
-            image, target = sample['image'], sample['label']
+            # image, target = sample['image'], sample['label']
+            image, target = sample[0], sample[1]
             search = next (iter (self.train_loader2))
-            image_search, target_search = search['image'], search['label']
+            # image_search, target_search = search['image'], search['label']
+            image_search, target_search = search[0], search[1]
             # print ('------------------------begin-----------------------')
             if self.args.cuda:
                 image, target = image.cuda(), target.cuda()
@@ -197,7 +199,7 @@ def main():
     parser.add_argument('--out_stride', type=int, default=16,
                         help='network output stride (default: 8)')
     parser.add_argument('--dataset', type=str, default='pascal',
-                        choices=['pascal', 'coco', 'cityscapes'],
+                        choices=['pascal', 'coco', 'cityscapes', 'sealer'],
                         help='dataset name (default: pascal)')
     parser.add_argument('--use_sbd', action='store_true', default=False,
                         help='whether to use SBD dataset (default: True)')
