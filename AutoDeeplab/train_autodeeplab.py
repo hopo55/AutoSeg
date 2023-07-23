@@ -12,10 +12,11 @@ from utils.calculate_weights import calculate_weigths_labels
 from utils.lr_scheduler import LR_Scheduler
 from utils.saver import Saver
 from utils.summaries import TensorboardSummary
-from utils.metrics import Evaluator
+from utils.metrics import Evaluator, AverageMeter
 from auto_deeplab import AutoDeeplab
 from architect import Architect
 import segmentation_models_pytorch as smp
+import torchvision.transforms.functional as TF
 
 class Trainer(object):
     def __init__(self, args):
@@ -153,7 +154,19 @@ class Trainer(object):
         self.evaluator.reset()
         tbar = tqdm(self.val_loader, desc='\r')
         test_loss = 0.0
+        latency = AverageMeter()
+
+        rand_img = torch.rand(1, 3, 640, 640).cuda()
+        for _ in range(10):
+            _ = model(rand_img)
+
+        starter, ender = torch.cuda.Event(enable_timing=True), torch.cuda.Event(enable_timing=True)
+
         for i, sample in enumerate(tbar):
+            torch.cuda.synchronize()
+            torch.cuda.synchronize()
+            starter.record()
+
             # image, target = sample['image'], sample['label']
             image, target = sample[0], sample[1]
             if self.args.cuda:
@@ -169,7 +182,33 @@ class Trainer(object):
             # Add batch sample into evaluator
             self.evaluator.add_batch(target, pred)
 
+            ori_image = image * 255.0
+            output_image = output * 255.0
+
+            ori_image[:, 0] = output_image[:, 0]
+
+            # 두 배열을 RGB 이미지로 결합
+            for n, (ori_img, out_img) in enumerate(zip(ori_image, output_image)):
+                index = i * (len(ori_image))
+                ori_img = TF.to_pil_image(ori_img.squeeze().byte(), mode='RGB')
+                ori_img.save("overlap/output_image" + str(index + n) + ".jpg")
+
+                out_img = TF.to_pil_image(out_img.squeeze().byte(), mode='L')
+                out_img.save("results/output_image" + str(index + n) + ".jpg")
+
+            ender.record()
+            torch.cuda.synchronize()
+            torch.cuda.synchronize()
+            latency_time = starter.elapsed_time(ender) / image.size(0)    # μs ()
+            torch.cuda.empty_cache()
+
+            latency.update(latency_time)
+
         # Fast test during the training
+        latency_avg = latency.avg
+        fps = 1000./latency_avg
+        sec = latency/1000.
+
         Acc = self.evaluator.Pixel_Accuracy()
         Acc_class = self.evaluator.Pixel_Accuracy_Class()
         mIoU = self.evaluator.Mean_Intersection_over_Union()
@@ -181,7 +220,7 @@ class Trainer(object):
         self.writer.add_scalar('val/fwIoU', FWIoU, epoch)
         print('Validation:')
         print('[Epoch: %d, numImages: %5d]' % (epoch, i * self.args.batch_size + image.data.shape[0]))
-        print("Acc:{}, Acc_class:{}, mIoU:{}, fwIoU: {}".format(Acc, Acc_class, mIoU, FWIoU))
+        print("Acc:{}, Acc_class:{}, mIoU:{}, fwIoU: {}, FPS; {}, Sec; {}".format(Acc, Acc_class, mIoU, FWIoU, fps, sec))
         print('Loss: %.3f' % test_loss)
 
         new_pred = mIoU

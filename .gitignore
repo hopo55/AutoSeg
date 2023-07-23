@@ -5,6 +5,8 @@ __pycache__/
 
 # run
 run
+overlap
+results
 
 # data
 *.zip
