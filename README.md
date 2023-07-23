@@ -5,7 +5,7 @@ Neural Architecture Search (NAS) for Segmentation
 ## AutoDeeplab [2]
 **Start Training using Sealer Dataset**
 '''
-sh train_voc.sh
+    sh train_voc.sh
 '''
 <br/><br/>
 
