@@ -38,15 +38,26 @@ class Cell(nn.Module):
         self._steps = steps
         self._multiplier = multiplier
         self._ops = nn.ModuleList()
+
+        # Error ouccur point
+        # for i in range(self._steps):
+        #     for j in range(2+i):
+        #         if C_prev_prev != -1 and j != 0:
+        #             op = MixedOp(C, stride)
+        #         else:
+        #             stride = 1
+        #             op = None
+        #         stride = 1
+        #         self._ops.append(op)
         for i in range(self._steps):
-            for j in range(2+i):
-                if C_prev_prev != -1 and j != 0:
-                    op = MixedOp(C, stride)
-                else:
-                    stride = 1
-                    op = None
+            for j in range(2 + i):
                 stride = 1
+                if C_prev_prev == -1 and j == 0:
+                    op = None
+                else:
+                    op = MixedOp(self.C_out, stride)
                 self._ops.append(op)
+
         self.ReLUConvBN = ReLUConvBN (self._multiplier * self.C_out, self.C_out, 1, 1, 0)
 
     def forward(self, s0, s1, weights):

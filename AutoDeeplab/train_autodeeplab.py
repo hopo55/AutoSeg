@@ -198,18 +198,18 @@ def main():
                         help='backbone name (default: resnet)')
     parser.add_argument('--out_stride', type=int, default=16,
                         help='network output stride (default: 8)')
-    parser.add_argument('--dataset', type=str, default='pascal',
+    parser.add_argument('--dataset', type=str, default='sealer',
                         choices=['pascal', 'coco', 'cityscapes', 'sealer'],
-                        help='dataset name (default: pascal)')
+                        help='dataset name (default: sealer)')
     parser.add_argument('--use_sbd', action='store_true', default=False,
                         help='whether to use SBD dataset (default: True)')
     parser.add_argument('--workers', type=int, default=4,
                         metavar='N', help='dataloader threads')
-    parser.add_argument('--base_size', type=int, default=320,
+    parser.add_argument('--base_size', type=int, default=128,
                         help='base image size')
-    parser.add_argument('--crop_size', type=int, default=320,
+    parser.add_argument('--crop_size', type=int, default=128,
                         help='crop image size')
-    parser.add_argument('--resize', type=int, default=512,
+    parser.add_argument('--resize', type=int, default=128,
                         help='resize image size')
     parser.add_argument('--sync_bn', type=bool, default=None,
                         help='whether to use sync bn (default: auto)')
@@ -254,7 +254,7 @@ def main():
                         False, help='disables CUDA training')
     parser.add_argument('--gpu-ids', nargs='*', type=int, default=0,
                         help='which GPU to train on (default: 0)')
-    parser.add_argument('--seed', type=int, default=1, metavar='S',
+    parser.add_argument('--seed', type=int, default=0, metavar='S',
                         help='random seed (default: 1)')
     # checking point
     parser.add_argument('--resume', type=str, default=None,
