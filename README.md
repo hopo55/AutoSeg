@@ -1,14 +1,13 @@
 # AutoSeg
 Neural Architecture Search (NAS) for Segmentation
+<br/><br/>
 
 ## AutoDeeplab [2]
-
 **Start Training using Sealer Dataset**
 '''
 sh train_voc.sh
 '''
-
-
+<br/><br/>
 
 ## References
 [1] : [Auto-DeepLab: Hierarchical Neural Architecture Search for Semantic Image Segmentation](https://arxiv.org/abs/1901.02985)
