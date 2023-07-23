@@ -15,6 +15,7 @@ from utils.summaries import TensorboardSummary
 from utils.metrics import Evaluator
 from auto_deeplab import AutoDeeplab
 from architect import Architect
+import segmentation_models_pytorch as smp
 
 class Trainer(object):
     def __init__(self, args):
@@ -43,10 +44,12 @@ class Trainer(object):
             weight = torch.from_numpy(weight.astype(np.float32))
         else:
             weight = None
-        self.criterion = SegmentationLosses(weight=weight, cuda=args.cuda).build_loss(mode=args.loss_type)
+        # self.criterion = SegmentationLosses(weight=weight, cuda=args.cuda).build_loss(mode=args.loss_type)
+        self.criterion = smp.losses.DiceLoss('binary')
 
         # Define network
-        model = AutoDeeplab (self.nclass, 12, self.criterion, crop_size=self.args.crop_size)
+        # model = AutoDeeplab(self.nclass, 12, self.criterion, crop_size=self.args.crop_size)
+        model = AutoDeeplab(self.nclass, 6, self.criterion, crop_size=self.args.crop_size)
         optimizer = torch.optim.SGD(
                 model.weight_parameters(),
                 args.lr,
@@ -74,7 +77,7 @@ class Trainer(object):
         self.scheduler = LR_Scheduler(args.lr_scheduler, args.lr,
                                             args.epochs, len(self.train_loader1))
 
-        self.architect = Architect (self.model, args)
+        self.architect = Architect(self.model, args)
         # Resuming checkpoint
         self.best_pred = 0.0
         if args.resume is not None:
@@ -128,7 +131,7 @@ class Trainer(object):
             # Show 10 * 3 inference results each epoch
             if i % (num_img_tr // 10) == 0:
                 global_step = i + num_img_tr * epoch
-                self.summary.visualize_image(self.writer, self.args.dataset, image, target, output, global_step)
+                # self.summary.visualize_image(self.writer, self.args.dataset, image, target, output, global_step)
 
         self.writer.add_scalar('train/total_loss_epoch', train_loss, epoch)
         print('[Epoch: %d, numImages: %5d]' % (epoch, i * self.args.batch_size + image.data.shape[0]))
@@ -151,7 +154,8 @@ class Trainer(object):
         tbar = tqdm(self.val_loader, desc='\r')
         test_loss = 0.0
         for i, sample in enumerate(tbar):
-            image, target = sample['image'], sample['label']
+            # image, target = sample['image'], sample['label']
+            image, target = sample[0], sample[1]
             if self.args.cuda:
                 image, target = image.cuda(), target.cuda()
             with torch.no_grad():
@@ -252,7 +256,7 @@ def main():
     # cuda, seed and logging
     parser.add_argument('--no_cuda', action='store_true', default=
                         False, help='disables CUDA training')
-    parser.add_argument('--gpu-ids', nargs='*', type=int, default=0,
+    parser.add_argument('--gpu_ids', nargs='*', type=int, default=[0],
                         help='which GPU to train on (default: 0)')
     parser.add_argument('--seed', type=int, default=0, metavar='S',
                         help='random seed (default: 1)')

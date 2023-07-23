@@ -360,176 +360,190 @@ class AutoDeeplab (nn.Module) :
                 print ('begin0')
                 num = 0
                 if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 0)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
-                    print ('end0-1')
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 1)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
+                    try:
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 0)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
+                        print ('end0-1')
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 1)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
+                    except ZeroDivisionError:
+                        print("Error: Dividing by zero is not allowed")
 
             elif layer == 1 :
                 print ('begin1')
 
                 num = 0
                 if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 0)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
-                    print ('end1-1')
+                    try:
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 0)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
+                        print ('end1-1')
 
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 1)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 1)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
+                    except ZeroDivisionError:
+                        print("Error: Dividing by zero is not allowed")
 
                 num = 1
                 if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 0)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 1)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
-                    curr_value = curr_value * weight_network[layer][num][2]
-                    curr_result.append ([num,2])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 2)
-                    curr_value = curr_value / weight_network[layer][num][2]
-                    curr_result.pop ()
+                    try:
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 0)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 1)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][2]
+                        curr_result.append ([num,2])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 2)
+                        curr_value = curr_value / weight_network[layer][num][2]
+                        curr_result.pop ()
+                    except ZeroDivisionError:
+                        print("Error: Dividing by zero is not allowed")
 
 
             elif layer == 2 :
                 print ('begin2')
 
                 num = 0
-                if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 0)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
-                    print ('end2-1')
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 1)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
+                try:
+                    if last == num :
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 0)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
+                        print ('end2-1')
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 1)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
 
-                num = 1
-                if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 0)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 1)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
-                    curr_value = curr_value * weight_network[layer][num][2]
-                    curr_result.append ([num,2])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 2)
-                    curr_value = curr_value / weight_network[layer][num][2]
-                    curr_result.pop ()
+                    num = 1
+                    if last == num :
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 0)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 1)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][2]
+                        curr_result.append ([num,2])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 2)
+                        curr_value = curr_value / weight_network[layer][num][2]
+                        curr_result.pop ()
 
-                num = 2
-                if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 1)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 2)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
-                    curr_value = curr_value * weight_network[layer][num][2]
-                    curr_result.append ([num,2])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 3)
-                    curr_value = curr_value / weight_network[layer][num][2]
-                    curr_result.pop ()
+                    num = 2
+                    if last == num :
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 1)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 2)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][2]
+                        curr_result.append ([num,2])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 3)
+                        curr_value = curr_value / weight_network[layer][num][2]
+                        curr_result.pop ()
+                except ZeroDivisionError:
+                        print("Error: Dividing by zero is not allowed")
             else :
+                try:
+                    num = 0
+                    if last == num :
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 0)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
 
-                num = 0
-                if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 0)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 1)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
 
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 1)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
+                    num = 1
+                    if last == num :
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 0)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
 
-                num = 1
-                if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 0)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 1)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
 
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 1)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][2]
+                        curr_result.append ([num,2])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 2)
+                        curr_value = curr_value / weight_network[layer][num][2]
+                        curr_result.pop ()
 
-                    curr_value = curr_value * weight_network[layer][num][2]
-                    curr_result.append ([num,2])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 2)
-                    curr_value = curr_value / weight_network[layer][num][2]
-                    curr_result.pop ()
+                    num = 2
+                    if last == num :
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 1)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
 
-                num = 2
-                if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 1)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 2)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
 
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 2)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][2]
+                        curr_result.append ([num,2])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 3)
+                        curr_value = curr_value / weight_network[layer][num][2]
+                        curr_result.pop ()
 
-                    curr_value = curr_value * weight_network[layer][num][2]
-                    curr_result.append ([num,2])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 3)
-                    curr_value = curr_value / weight_network[layer][num][2]
-                    curr_result.pop ()
+                    num = 3
+                    if last == num :
+                        curr_value = curr_value * weight_network[layer][num][0]
+                        curr_result.append ([num,0])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 2)
+                        curr_value = curr_value / weight_network[layer][num][0]
+                        curr_result.pop ()
 
-                num = 3
-                if last == num :
-                    curr_value = curr_value * weight_network[layer][num][0]
-                    curr_result.append ([num,0])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 2)
-                    curr_value = curr_value / weight_network[layer][num][0]
-                    curr_result.pop ()
-
-                    curr_value = curr_value * weight_network[layer][num][1]
-                    curr_result.append ([num,1])
-                    _parse (weight_network, layer + 1, curr_value, curr_result, 3)
-                    curr_value = curr_value / weight_network[layer][num][1]
-                    curr_result.pop ()
+                        curr_value = curr_value * weight_network[layer][num][1]
+                        curr_result.append ([num,1])
+                        _parse (weight_network, layer + 1, curr_value, curr_result, 3)
+                        curr_value = curr_value / weight_network[layer][num][1]
+                        curr_result.pop ()
+                except ZeroDivisionError:
+                        print("Error: Dividing by zero is not allowed")
         network_weight = F.softmax(self.alphas_network, dim=-1) * 5
         network_weight = network_weight.data.cpu().numpy()
         _parse (network_weight, 0, 1, [],0)
