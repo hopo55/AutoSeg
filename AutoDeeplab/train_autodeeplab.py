@@ -246,7 +246,7 @@ def main():
                         help='dataset name (default: sealer)')
     parser.add_argument('--use_sbd', action='store_true', default=False,
                         help='whether to use SBD dataset (default: True)')
-    parser.add_argument('--workers', type=int, default=4,
+    parser.add_argument('--workers', type=int, default=0,
                         metavar='N', help='dataloader threads')
     parser.add_argument('--base_size', type=int, default=128,
                         help='base image size')
