@@ -1,1 +1,0 @@
-CUDA_VISIBLE_DEVICES=1 python train_autodeeplab.py --backbone resnet --lr 0.007 --epochs 10 --batch_size 4 --gpu_ids 0 --eval_interval 1 --dataset sealer
