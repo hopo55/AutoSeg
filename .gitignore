@@ -16,6 +16,10 @@ results
 
 # C extensions
 *.so
+*.h
+*.cuh
+*.cu
+*.cpp
 
 # Distribution / packaging
 .Python

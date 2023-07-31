@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import platform
 
 OPS = {
   'none' : lambda C, stride, affine: Zero(stride),
@@ -138,3 +139,25 @@ class ASPP(nn.Module):
         concate = torch.cat([conv11, conv33, upsample], dim=1)
 
         return self.concate_conv(concate)
+
+class ABN(nn.Module):
+  def __init__(self, C_out, affine=False):
+    super(ABN, self).__init__()
+    self.op = nn.Sequential(
+      nn.BatchNorm2d(C_out, affine=affine),
+      nn.ReLU(inplace=False)
+    )
+  
+  def forward(self, x):
+    return self.op(x)
+
+
+class NaiveBN(nn.Module):
+  def __init__(self, C_out, momentum=0.1, affine=True):
+    super(NaiveBN, self).__init__()
+    self.op = nn.Sequential(
+      nn.BatchNorm2d(C_out, affine=affine),
+      nn.ReLU()
+    )
+    
+    self._initialize_weights()
