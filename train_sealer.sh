@@ -1,1 +1,0 @@
-CUDA_VISIBLE_DEVICES=0 python decode_autodeeplab.py --dataset sealer --batch_size 16 --resume run/sealer/autodeeplab/model_best.pth.tar
